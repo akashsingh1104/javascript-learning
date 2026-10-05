@@ -1,0 +1,51 @@
+<!-- Edit and remove DOM elements-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chai aur Code | DOM</title>
+</head>
+<body style="background-color: black; color: white;">
+    <ul class="language">
+        <li>Javascript</li>
+    </ul>
+</body>
+<script>
+    function addLanguage(langName){
+        const li = document.createElement('li')
+        //li k andar koi value add krni h means inner html m add krdo
+        li.innerHTML = `${langName}`
+        document.querySelector('.language').appendChild(li) //the problem in this method is that it traverse tree so if their are many elements so we can face optimisation issue
+    }
+    addLanguage("python")
+    addLanguage("Typescript")
+    //lets add language in optimised way
+    function addOptiLanguage(langName){
+        //phle list item to banana hi padega
+        const li = document.createElement('li');
+        li.appendChild(document.createTextNode(langName))
+        document.querySelector('.language').appendChild(li)
+    }
+    addOptiLanguage('golang')
+
+    //editing of value
+    //first select the value
+    const secondLang = document.querySelector("li:nth-child(2)")
+    //now i want to change this lang
+    // secondLang.innerHTML = "Mojo"
+    //but is not optimised as we discussed
+    //second approach:
+    const newLi= document.createElement("li")
+    newLi.textContent = "Mojo" //but is not added yet
+    secondLang.replaceWith(newLi) //now changed
+
+    //another example replace javascript with typescript
+    const firstLang = document.querySelector("li:first-child")
+    firstLang.outerHTML = '<li>Typescript</li>'
+
+    //how to remove : remove golang
+    const lastLang = document.querySelector('li:last-child')
+    lastLang.remove()
+</script>
+</html>
